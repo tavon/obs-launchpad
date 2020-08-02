@@ -28,6 +28,9 @@ for (let x = 0; x < 8; x++) {
 var onPadScenes = []
 var desktopMuted = false;
 var micMuted = false;
+var mic2Muted = false;
+var mic3Muted = false;
+
 
 const obs = new OBSWebSocket();
 (async () => {
@@ -78,6 +81,14 @@ obs.on('SourceMuteStateChanged', data => {
         micMuted = data.muted
         output.sendMessage([144, 65, data.muted ? 1 : 0])
     }
+    if (data.sourceName == config.MicChannel2) {
+        mic2Muted = data.muted
+        output.sendMessage([144, 66, data.muted ? 1 : 0])
+    }
+    if (data.sourceName == config.MicChannel3) {
+        mic3Muted = data.muted
+        output.sendMessage([144, 67, data.muted ? 1 : 0])
+    }
 })
 
 // Error catching with obs-websocket-js
@@ -96,6 +107,18 @@ input.on('message', (d, m) => {
     if (m[1] == 49 && m[0] == 176) {
         obs.send('SetVolume', {
             'source': config.MicChannel,
+            'volume': m[2] / 127
+        })
+    }
+    if (m[1] == 50 && m[0] == 176) {
+        obs.send('SetVolume', {
+            'source': config.MicChannel2,
+            'volume': m[2] / 127
+        })
+    }
+    if (m[1] == 51 && m[0] == 176) {
+        obs.send('SetVolume', {
+            'source': config.MicChannel3,
             'volume': m[2] / 127
         })
     }
@@ -126,6 +149,18 @@ input.on('message', (d, m) => {
         obs.send('SetMute', {
             'source': config.MicChannel,
             'mute': !micMuted
+        })
+    }
+    if (m[1] == 66 && m[0] == 144) {
+        obs.send('SetMute', {
+            'source': config.MicChannel2,
+            'mute': !mic2Muted
+        })
+    }
+    if (m[1] == 67 && m[0] == 144) {
+        obs.send('SetMute', {
+            'source': config.MicChannel3,
+            'mute': !mic3Muted
         })
     }
 

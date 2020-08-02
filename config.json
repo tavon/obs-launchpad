@@ -1,7 +1,9 @@
 {
-    "MicChannel": "Mic/Aux",
-    "DesktopChannel": "Desktop Audio",
-    "host": "localhost:4826",
+    "MicChannel": "Proclaim",
+    "MicChannel2": "Skype",
+    "MicChannel3": "Video",
+    "DesktopChannel": "Music",
+    "host": "localhost:4444",
     "password": "",
     "device": "apc mini",
     "activeSceneColor": 1,
