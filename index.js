@@ -43,10 +43,10 @@ const obs = new OBSWebSocket();
     console.log(`Successfully connected`);
     var scenes = await obs.send('GetSceneList');
     var currentScene = await obs.send('GetCurrentScene');
-    scenes.scenes.forEach(s => {
-        onPadScenes[order[scenes.scenes.indexOf(s)]] = s.name
-    })
-    newScene(currentScene.name)
+    // scenes.scenes.forEach(s => {
+    //     onPadScenes[order[scenes.scenes.indexOf(s)]] = s.name
+    // })
+    // newScene(currentScene.name)
     output.sendMessage([144, 87, 1])
     output.sendMessage([144, 88, 1])
 })()
